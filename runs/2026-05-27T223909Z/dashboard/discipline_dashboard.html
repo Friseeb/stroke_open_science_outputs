@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open-Science Uptake Across Stroke and Adjacent Fields</title>
+  <style>
+    :root {
+      --bg: #f5f2e8;
+      --panel: rgba(255, 252, 246, 0.9);
+      --ink: #111827;
+      --muted: #4b5563;
+      --rule: rgba(17, 24, 39, 0.14);
+      --soft-rule: rgba(17, 24, 39, 0.08);
+      --callout: rgba(31, 158, 137, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(180, 222, 44, 0.11), transparent 28rem),
+        radial-gradient(circle at top right, rgba(49, 104, 142, 0.14), transparent 26rem),
+        linear-gradient(180deg, #fbfaf7 0%, var(--bg) 100%);
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+      line-height: 1.55;
+    }
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 44px 28px 68px;
+    }
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 2.25fr) minmax(260px, 1fr);
+      gap: 28px;
+      align-items: start;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 28px;
+    }
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      font: 600 0.75rem/1.1 "Arial", sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #31688e;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.1rem, 4vw, 3.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+    }
+    h2 {
+      margin: 0 0 6px;
+      font-size: 1.16rem;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+    .subtitle {
+      font: 600 0.95rem/1.35 "Arial", sans-serif;
+      letter-spacing: 0.01em;
+      color: #1f2937;
+      margin-bottom: 10px;
+    }
+    .lede {
+      max-width: 62ch;
+      font-size: 1.03rem;
+    }
+    .meta {
+      display: grid;
+      gap: 8px;
+      justify-items: end;
+      font-size: 0.86rem;
+      color: var(--muted);
+      text-align: right;
+    }
+    .meta-note {
+      max-width: 28ch;
+      padding-top: 10px;
+      border-top: 1px solid var(--soft-rule);
+      font-size: 0.88rem;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 18px;
+      margin: 28px 0 18px;
+    }
+    .stat-block {
+      border-top: 2px solid var(--rule);
+      padding-top: 12px;
+      min-height: 76px;
+    }
+    .stat-value {
+      font-size: 1.16rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .stat-label {
+      font-size: 0.86rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      margin: 16px 0 0;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #374151;
+      font-size: 0.92rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.52);
+      border: 1px solid rgba(17, 24, 39, 0.05);
+    }
+    .legend-swatch {
+      width: 28px;
+      height: 4px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+    .callout {
+      margin-top: 22px;
+      padding: 16px 18px;
+      background: var(--callout);
+      border-left: 3px solid #1f9e89;
+    }
+    .callout h2 {
+      margin-bottom: 8px;
+    }
+    .callout ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 30px;
+    }
+    .chart-card {
+      background: var(--panel);
+      border: 1px solid var(--soft-rule);
+      border-radius: 20px;
+      padding: 18px 18px 10px;
+      box-shadow: 0 14px 32px rgba(17, 24, 39, 0.035);
+      position: relative;
+      overflow: hidden;
+    }
+    .chart-card::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+      background: linear-gradient(90deg, #440154 0%, #1f9e89 52%, #fde725 100%);
+      opacity: 0.72;
+    }
+    .chart-kicker {
+      margin-bottom: 8px;
+      font: 600 0.72rem/1.1 "Arial", sans-serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #31688e;
+    }
+    .chart-card-wide {
+      grid-column: 1 / -1;
+    }
+    .table-section {
+      margin-top: 34px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+    }
+    .table-wrap {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    thead th {
+      text-align: left;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 0 10px 10px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    tbody td {
+      padding: 11px 10px 11px 0;
+      border-bottom: 1px solid var(--soft-rule);
+      color: #1f2937;
+    }
+    .discipline-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .table-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+      flex: 0 0 auto;
+    }
+    .footnote {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    @media (max-width: 980px) {
+      header {
+        grid-template-columns: 1fr;
+      }
+      .meta {
+        justify-items: start;
+        text-align: left;
+      }
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <section>
+        <div class="eyebrow">Cross-discipline open-science benchmark</div>
+        <h1>Open-Science Uptake Across Stroke and Adjacent Fields</h1>
+        <div class="subtitle">Cardiology, Neurology, Neuroscience, and Stroke, 2015 to 2026. 12,093 retrieved papers with non-OA signals emphasized over plain open access.</div>
+        <p class="lede">Trend panels are scaled to the observed spread within each metric so separation is visible. Use the comparative ledger for absolute cross-metric magnitude; use the charts for relative ordering and change.</p>
+      </section>
+      <section class="meta">
+        <div>Generated 2026-05-27 22:39 UTC</div>
+        <div class="meta-note">Highest non-OA signal: Neuroscience at 2%.</div>
+      </section>
+    </header>
+
+    <section class="stats-grid"><div class="stat-block"><div class="stat-value">4</div><div class="stat-label">Disciplines in scope</div></div><div class="stat-block"><div class="stat-value">12,093</div><div class="stat-label">Retrieved papers</div></div><div class="stat-block"><div class="stat-value">2015 to 2026</div><div class="stat-label">Observation window</div></div><div class="stat-block"><div class="stat-value">Neuroscience (2%)</div><div class="stat-label">Strongest non-OA signal</div></div></section>
+    <section class="legend"><div class="legend-item"><span class="legend-swatch" style="background:#440154"></span><span>Cardiology</span></div><div class="legend-item"><span class="legend-swatch" style="background:#31688E"></span><span>Neurology</span></div><div class="legend-item"><span class="legend-swatch" style="background:#35B779"></span><span>Neuroscience</span></div><div class="legend-item"><span class="legend-swatch" style="background:#FDE725"></span><span>Stroke</span></div></section>
+    
+
+    <section class="charts-grid">
+      <section class="chart-card chart-card-wide"><div class="chart-kicker">Ranked overview</div><h2>Where richer open signals concentrate</h2><p>Disciplines ordered by repository, preprint, or preregistration evidence, excluding plain OA.</p><div>                        <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.5.0.min.js" integrity="sha256-fHbNLP+GlIXN+efbQec78UkemUz3NJp7UmfGxC1tNxs=" crossorigin="anonymous"></script>                <div id="4242e414-ae27-4d3c-8572-2ff154b6b854" class="plotly-graph-div" style="height:312px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("4242e414-ae27-4d3c-8572-2ff154b6b854")) {                    Plotly.newPlot(                        "4242e414-ae27-4d3c-8572-2ff154b6b854",                        [{"hoverinfo":"skip","line":{"color":"#440154","width":2},"mode":"lines","showlegend":false,"x":[0,0.0013679890560875513],"y":["Cardiology","Cardiology"],"type":"scatter"},{"hovertemplate":"Cardiology: %{x:.0%}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#440154","line":{"color":"rgba(255,255,255,0.92)","width":1.1},"size":10},"mode":"markers+text","showlegend":false,"text":["0%"],"textfont":{"color":"#440154","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[0.0013679890560875513],"y":["Cardiology"],"type":"scatter"},{"hoverinfo":"skip","line":{"color":"#31688E","width":2},"mode":"lines","showlegend":false,"x":[0,0.004259850905218318],"y":["Neurology","Neurology"],"type":"scatter"},{"hovertemplate":"Neurology: %{x:.0%}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#31688E","line":{"color":"rgba(255,255,255,0.92)","width":1.1},"size":10},"mode":"markers+text","showlegend":false,"text":["0%"],"textfont":{"color":"#31688E","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[0.004259850905218318],"y":["Neurology"],"type":"scatter"},{"hoverinfo":"skip","line":{"color":"#FDE725","width":2},"mode":"lines","showlegend":false,"x":[0,0.010930576070901034],"y":["Stroke","Stroke"],"type":"scatter"},{"hovertemplate":"Stroke: %{x:.0%}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#FDE725","line":{"color":"rgba(255,255,255,0.92)","width":1.1},"size":10},"mode":"markers+text","showlegend":false,"text":["1%"],"textfont":{"color":"#FDE725","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[0.010930576070901034],"y":["Stroke"],"type":"scatter"},{"hoverinfo":"skip","line":{"color":"#35B779","width":2},"mode":"lines","showlegend":false,"x":[0,0.020896528479946073],"y":["Neuroscience","Neuroscience"],"type":"scatter"},{"hovertemplate":"Neuroscience: %{x:.0%}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#35B779","line":{"color":"rgba(255,255,255,0.92)","width":1.1},"size":10},"mode":"markers+text","showlegend":false,"text":["2%"],"textfont":{"color":"#35B779","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[0.020896528479946073],"y":["Neuroscience"],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"margin":{"l":132,"r":72,"t":8,"b":26},"font":{"family":"Georgia, 'Iowan Old Style', 'Palatino Linotype', serif","size":12,"color":"#111827"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","height":312,"xaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"tickformat":".0%","range":[0,0.08],"showgrid":true,"gridcolor":"rgba(17, 24, 39, 0.065)","zeroline":false},"yaxis":{"tickfont":{"size":12,"color":"#374151"},"categoryorder":"array","categoryarray":["Cardiology","Neurology","Stroke","Neuroscience"],"showgrid":false,"title":{}}},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div></section><section class="chart-card"><div class="chart-kicker">Trend view</div><h2>Publication volume</h2><p>Annual retrieval volume, shown to keep denominators and field scale visible.</p><div>                            <div id="881b6df0-a49c-4bf5-a70d-1f327792c3ab" class="plotly-graph-div" style="height:292px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("881b6df0-a49c-4bf5-a70d-1f327792c3ab")) {                    Plotly.newPlot(                        "881b6df0-a49c-4bf5-a70d-1f327792c3ab",                        [{"hovertemplate":"%{x}: %{y:,.0f}\u003cextra\u003eCardiology\u003c\u002fextra\u003e","line":{"color":"#440154","width":2.8},"marker":{"color":"#440154","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Cardiology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"i2","bdata":"9gD1APQA9QDtAPMA7wDzAPEA+AD3APYA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Cardiology 246"],"textfont":{"color":"#440154","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[246],"type":"scatter"},{"hovertemplate":"%{x}: %{y:,.0f}\u003cextra\u003eNeurology\u003c\u002fextra\u003e","line":{"color":"#31688E","width":2.8},"marker":{"color":"#31688E","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neurology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"i2","bdata":"7gDrAPIA6QDpAPAA7QDsAOYA4gDqAOkA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neurology 233"],"textfont":{"color":"#31688E","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[233],"type":"scatter"},{"hovertemplate":"%{x}: %{y:,.0f}\u003cextra\u003eNeuroscience\u003c\u002fextra\u003e","line":{"color":"#35B779","width":2.8},"marker":{"color":"#35B779","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neuroscience","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"i2","bdata":"+AD2APYA+QD3APoA+AD4APgA+QDxAPcA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neuroscience 247"],"textfont":{"color":"#35B779","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[247],"type":"scatter"},{"hovertemplate":"%{x}: %{y:,.0f}\u003cextra\u003eStroke\u003c\u002fextra\u003e","line":{"color":"#FDE725","width":2.8},"marker":{"color":"#FDE725","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Stroke","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"i2","bdata":"HgEdARkBGwEcAR0BEQEYARUBGgEZASAB"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Stroke 288"],"textfont":{"color":"#FDE725","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[288],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"margin":{"l":36,"r":118,"t":6,"b":34},"font":{"family":"Georgia, 'Iowan Old Style', 'Palatino Linotype', serif","size":12,"color":"#111827"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","height":292,"hovermode":"x unified","showlegend":false,"xaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","linecolor":"rgba(156, 163, 175, 0.55)","range":[2014.9,2026.65],"showspikes":false},"yaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":true,"gridcolor":"rgba(17, 24, 39, 0.065)","gridwidth":1,"zeroline":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","range":[214.48,299.52]}},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div></section><section class="chart-card"><div class="chart-kicker">Trend view</div><h2>Signals beyond OA</h2><p>Repository, preprint, or preregistration evidence, excluding plain open access.</p><div>                            <div id="3cbf8e98-1f8a-4878-a099-9504afb29a95" class="plotly-graph-div" style="height:292px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("3cbf8e98-1f8a-4878-a099-9504afb29a95")) {                    Plotly.newPlot(                        "3cbf8e98-1f8a-4878-a099-9504afb29a95",                        [{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eCardiology\u003c\u002fextra\u003e","line":{"color":"#440154","width":2.8},"marker":{"color":"#440154","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Cardiology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"pxBoCoGmgD8AAAAAAAAAAAAAAAAAAAAAyJ0l7Oa3cD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABUCQE5P5VwPwAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Cardiology 0.0%"],"textfont":{"color":"#440154","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eNeurology\u003c\u002fextra\u003e","line":{"color":"#31688E","width":2.8},"marker":{"color":"#31688E","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neurology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"Ecg1Ecg1cT95c0KJBm5xP5Cc5mv17HA\u002fnKKMgFOUcT+cooyAU5RxPwAAAAAAAAAAO80KDl9IcT8AAAAAAAAAAAAAAAAAAAAAePshgbcfcj8AAAAAAAAAAEPLr2Bo+ZU\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neurology 2.1%"],"textfont":{"color":"#31688E","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.02145922746781116],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eNeuroscience\u003c\u002fextra\u003e","line":{"color":"#35B779","width":2.8},"marker":{"color":"#35B779","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neuroscience","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"hBBCCCGEgD+nEGgKgaaAP6cQaAqBpoA\u002fuPXZjO+PlD\u002f+jYHV3t+YP\u002fyp8dJNYpA\u002fhBBCCCGEcD\u002fGGGOMMcaYP6WUUkoppZQ\u002fqvNrD7msiD8R8P4Q8P5wP5OeEcky6bk\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neuroscience 10.1%"],"textfont":{"color":"#35B779","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.10121457489878542],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eStroke\u003c\u002fextra\u003e","line":{"color":"#FDE725","width":2.8},"marker":{"color":"#FDE725","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Stroke","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"keFeBbOkbD\u002fnywGWbb5sPwAAAAAAAAAA1Y8zxdK1hT8LmwOJVthsP+fLAZZtvmw\u002fAAAAAAAAAAAWX\u002fEVX\u002fGFPwAAAAAAAAAAdMBuj7UMbT8aW\u002fyjLCeNP+Q4juM4jrM\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Stroke 7.6%"],"textfont":{"color":"#FDE725","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0763888888888889],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"margin":{"l":36,"r":118,"t":6,"b":34},"font":{"family":"Georgia, 'Iowan Old Style', 'Palatino Linotype', serif","size":12,"color":"#111827"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","height":292,"hovermode":"x unified","showlegend":false,"xaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","linecolor":"rgba(156, 163, 175, 0.55)","range":[2014.9,2026.65],"showspikes":false},"yaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":true,"gridcolor":"rgba(17, 24, 39, 0.065)","gridwidth":1,"zeroline":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","tickformat":".1%","range":[0.0,0.12348178137651822]}},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div></section><section class="chart-card"><div class="chart-kicker">Trend view</div><h2>Open-access baseline</h2><p>Share flagged as open access, regardless of richer open-science signals.</p><div>                            <div id="0da657be-3b10-4b8c-b113-37cf333e5eb2" class="plotly-graph-div" style="height:292px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("0da657be-3b10-4b8c-b113-37cf333e5eb2")) {                    Plotly.newPlot(                        "0da657be-3b10-4b8c-b113-37cf333e5eb2",                        [{"hovertemplate":"%{x}: %{y:.0%}\u003cextra\u003eCardiology\u003c\u002fextra\u003e","line":{"color":"#440154","width":2.8},"marker":{"color":"#440154","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Cardiology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"\u002frLeL+v94j\u002faExlI78\u002flP+d9ikuGYOU\u002fyUB6f65V5j8y2k6zgsPnP5Ey8HRrfug\u002fC2ozMF3n6D8fUUG2IaDoP5lw9phw9ug\u002fY4wxxhhj6D+hg0ddCjroP6TDRjpspOM\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Cardiology 61%"],"textfont":{"color":"#440154","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.6138211382113821],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.0%}\u003cextra\u003eNeurology\u003c\u002fextra\u003e","line":{"color":"#31688E","width":2.8},"marker":{"color":"#31688E","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neurology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"gxU6gxU64z+XH+n+wqfiP5QKE+9HTuM\u002fpDOpdnQm5T9Dy69gaPnlP2ZmZmZmZuo\u002fOrJnICod6T+Uui+PrQjqP5ze9KY3vek\u002fmA2afNmg6T\u002f5lm\u002f5lm\u002fpP1Cflwbq8+I\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neurology 59%"],"textfont":{"color":"#31688E","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.592274678111588],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.0%}\u003cextra\u003eNeuroscience\u003c\u002fextra\u003e","line":{"color":"#35B779","width":2.8},"marker":{"color":"#35B779","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neuroscience","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"zjnnnHPO5T8qBJpCoCnkP2ykw0Y6bOQ\u002fNHV+7SGX5T92Yid2YifmP05iEFg5tOg\u002fY4wxxhhj6D9877333nvnP2OMMcYYY+g\u002fy9NCd+xq6D83jDw3jDznP2l98eGK1uc\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neuroscience 74%"],"textfont":{"color":"#35B779","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.7449392712550608],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.0%}\u003cextra\u003eStroke\u003c\u002fextra\u003e","line":{"color":"#FDE725","width":2.8},"marker":{"color":"#FDE725","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Stroke","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"Ge5VMEvK4T\u002fUJIPGP03iPxOjVfJm5+I\u002f1mlRUj\u002fO5D93qSfjt0vlP+lhb1SKHuY\u002f+HiP93iP5z\u002fNzMzMzMzoPx5gOHdDm+g\u002fIuGU5sWf6D8tJx3gmsbmPxzHcRzHcec\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Stroke 73%"],"textfont":{"color":"#FDE725","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.7326388888888888],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"margin":{"l":36,"r":118,"t":6,"b":34},"font":{"family":"Georgia, 'Iowan Old Style', 'Palatino Linotype', serif","size":12,"color":"#111827"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","height":292,"hovermode":"x unified","showlegend":false,"xaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","linecolor":"rgba(156, 163, 175, 0.55)","range":[2014.9,2026.65],"showspikes":false},"yaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":true,"gridcolor":"rgba(17, 24, 39, 0.065)","gridwidth":1,"zeroline":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","tickformat":".0%","range":[0.4967517482517483,0.8841923076923076]}},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div></section><section class="chart-card"><div class="chart-kicker">Trend view</div><h2>Repository and materials</h2><p>Share with repository, code, or data links.</p><div>                            <div id="e8ae7c65-3380-4455-9472-96cf09bec888" class="plotly-graph-div" style="height:292px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("e8ae7c65-3380-4455-9472-96cf09bec888")) {                    Plotly.newPlot(                        "e8ae7c65-3380-4455-9472-96cf09bec888",                        [{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eCardiology\u003c\u002fextra\u003e","line":{"color":"#440154","width":2.8},"marker":{"color":"#440154","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Cardiology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"pxBoCoGmgD8AAAAAAAAAAAAAAAAAAAAAyJ0l7Oa3cD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABUCQE5P5VwPwAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Cardiology 0.0%"],"textfont":{"color":"#440154","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eNeurology\u003c\u002fextra\u003e","line":{"color":"#31688E","width":2.8},"marker":{"color":"#31688E","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neurology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"Ecg1Ecg1cT95c0KJBm5xP5Cc5mv17HA\u002fnKKMgFOUcT+cooyAU5RxPwAAAAAAAAAAO80KDl9IcT8AAAAAAAAAAAAAAAAAAAAAePshgbcfcj8AAAAAAAAAAEPLr2Bo+ZU\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neurology 2.1%"],"textfont":{"color":"#31688E","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.02145922746781116],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eNeuroscience\u003c\u002fextra\u003e","line":{"color":"#35B779","width":2.8},"marker":{"color":"#35B779","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neuroscience","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"hBBCCCGEgD+nEGgKgaaAP6cQaAqBpoA\u002fuPXZjO+PlD\u002f+jYHV3t+YP\u002fyp8dJNYpA\u002fhBBCCCGEcD\u002fGGGOMMcaYP6WUUkoppZQ\u002fqvNrD7msiD8R8P4Q8P5wP5OeEcky6bk\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neuroscience 10.1%"],"textfont":{"color":"#35B779","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.10121457489878542],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eStroke\u003c\u002fextra\u003e","line":{"color":"#FDE725","width":2.8},"marker":{"color":"#FDE725","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Stroke","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"keFeBbOkbD\u002fnywGWbb5sPwAAAAAAAAAA1Y8zxdK1hT8LmwOJVthsP+fLAZZtvmw\u002fAAAAAAAAAAAWX\u002fEVX\u002fGFPwAAAAAAAAAAdMBuj7UMbT8aW\u002fyjLCeNP+Q4juM4jrM\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Stroke 7.6%"],"textfont":{"color":"#FDE725","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0763888888888889],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"margin":{"l":36,"r":118,"t":6,"b":34},"font":{"family":"Georgia, 'Iowan Old Style', 'Palatino Linotype', serif","size":12,"color":"#111827"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","height":292,"hovermode":"x unified","showlegend":false,"xaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","linecolor":"rgba(156, 163, 175, 0.55)","range":[2014.9,2026.65],"showspikes":false},"yaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":true,"gridcolor":"rgba(17, 24, 39, 0.065)","gridwidth":1,"zeroline":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","tickformat":".1%","range":[0.0,0.12348178137651822]}},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div></section><section class="chart-card"><div class="chart-kicker">Trend view</div><h2>GitHub trace</h2><p>Share with a GitHub repository signal.</p><div>                            <div id="e47d28cd-0726-44b3-829d-1faaf4311954" class="plotly-graph-div" style="height:292px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("e47d28cd-0726-44b3-829d-1faaf4311954")) {                    Plotly.newPlot(                        "e47d28cd-0726-44b3-829d-1faaf4311954",                        [{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eCardiology\u003c\u002fextra\u003e","line":{"color":"#440154","width":2.8},"marker":{"color":"#440154","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Cardiology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Cardiology 0.0%"],"textfont":{"color":"#440154","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eNeurology\u003c\u002fextra\u003e","line":{"color":"#31688E","width":2.8},"marker":{"color":"#31688E","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neurology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJyijIBTlHE\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neurology 0.4%"],"textfont":{"color":"#31688E","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.004291845493562232],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eNeuroscience\u003c\u002fextra\u003e","line":{"color":"#35B779","width":2.8},"marker":{"color":"#35B779","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neuroscience","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"hBBCCCGEcD+nEGgKgaaAP6cQaAqBpnA\u002fxvdHCiZzkD\u002f+jYHV3t+IP\u002fyp8dJNYpA\u002fhBBCCCGEcD+EEEIIIYSQP6WUUkoppZQ\u002fqvNrD7msiD8R8P4Q8P5wP9NsYe42zaY\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neuroscience 4.5%"],"textfont":{"color":"#35B779","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.044534412955465584],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.1%}\u003cextra\u003eStroke\u003c\u002fextra\u003e","line":{"color":"#FDE725","width":2.8},"marker":{"color":"#FDE725","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Stroke","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Stroke 0.0%"],"textfont":{"color":"#FDE725","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"margin":{"l":36,"r":118,"t":6,"b":34},"font":{"family":"Georgia, 'Iowan Old Style', 'Palatino Linotype', serif","size":12,"color":"#111827"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","height":292,"hovermode":"x unified","showlegend":false,"xaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","linecolor":"rgba(156, 163, 175, 0.55)","range":[2014.9,2026.65],"showspikes":false},"yaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":true,"gridcolor":"rgba(17, 24, 39, 0.065)","gridwidth":1,"zeroline":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","tickformat":".1%","range":[0.0,0.05433198380566801]}},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div></section><section class="chart-card"><div class="chart-kicker">Trend view</div><h2>Dataset repository</h2><p>Share with a dataset in a public repository (DataCite, Dryad, Figshare, Dataverse, etc.).</p><div>                            <div id="e63e8d11-c2bb-4443-a52d-698ab66b03ad" class="plotly-graph-div" style="height:292px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("e63e8d11-c2bb-4443-a52d-698ab66b03ad")) {                    Plotly.newPlot(                        "e63e8d11-c2bb-4443-a52d-698ab66b03ad",                        [{"hovertemplate":"%{x}: %{y:.2%}\u003cextra\u003eCardiology\u003c\u002fextra\u003e","line":{"color":"#440154","width":2.8},"marker":{"color":"#440154","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Cardiology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"pxBoCoGmgD8AAAAAAAAAAAAAAAAAAAAAyJ0l7Oa3cD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABUCQE5P5VwPwAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Cardiology 0.00%"],"textfont":{"color":"#440154","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.2%}\u003cextra\u003eNeurology\u003c\u002fextra\u003e","line":{"color":"#31688E","width":2.8},"marker":{"color":"#31688E","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neurology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"Ecg1Ecg1cT8AAAAAAAAAAJCc5mv17HA\u002fAAAAAAAAAACcooyAU5RxPwAAAAAAAAAAO80KDl9IcT8AAAAAAAAAAAAAAAAAAAAAePshgbcfcj8AAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neurology 0.00%"],"textfont":{"color":"#31688E","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.2%}\u003cextra\u003eNeuroscience\u003c\u002fextra\u003e","line":{"color":"#35B779","width":2.8},"marker":{"color":"#35B779","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neuroscience","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"hBBCCCGEcD8AAAAAAAAAAKcQaAqBpnA\u002fAAAAAAAAAABUCQE5P5WAPwAAAAAAAAAAAAAAAAAAAACEEEIIIYRwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQJATk\u002flXA\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neuroscience 0.40%"],"textfont":{"color":"#35B779","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.004048582995951417],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.2%}\u003cextra\u003eStroke\u003c\u002fextra\u003e","line":{"color":"#FDE725","width":2.8},"marker":{"color":"#FDE725","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Stroke","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"AAAAAAAAAADnywGWbb5sPwAAAAAAAAAA1Y8zxdK1hT8LmwOJVthsP+fLAZZtvmw\u002fAAAAAAAAAAAWX\u002fEVX\u002fGFPwAAAAAAAAAAdMBuj7UMbT8aW\u002fyjLCdtP3Icx3Ecx5E\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Stroke 1.74%"],"textfont":{"color":"#FDE725","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.017361111111111112],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"margin":{"l":36,"r":118,"t":6,"b":34},"font":{"family":"Georgia, 'Iowan Old Style', 'Palatino Linotype', serif","size":12,"color":"#111827"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","height":292,"hovermode":"x unified","showlegend":false,"xaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","linecolor":"rgba(156, 163, 175, 0.55)","range":[2014.9,2026.65],"showspikes":false},"yaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":true,"gridcolor":"rgba(17, 24, 39, 0.065)","gridwidth":1,"zeroline":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","tickformat":".2%","range":[0.0,0.021180555555555557]}},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div></section><section class="chart-card"><div class="chart-kicker">Trend view</div><h2>Preregistration trace</h2><p>Share with preregistration evidence.</p><div>                            <div id="8056321b-1716-4529-b691-b6de4e2fc908" class="plotly-graph-div" style="height:292px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("8056321b-1716-4529-b691-b6de4e2fc908")) {                    Plotly.newPlot(                        "8056321b-1716-4529-b691-b6de4e2fc908",                        [{"hovertemplate":"%{x}: %{y:.2%}\u003cextra\u003eCardiology\u003c\u002fextra\u003e","line":{"color":"#440154","width":2.8},"marker":{"color":"#440154","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Cardiology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Cardiology 0.00%"],"textfont":{"color":"#440154","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.2%}\u003cextra\u003eNeurology\u003c\u002fextra\u003e","line":{"color":"#31688E","width":2.8},"marker":{"color":"#31688E","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neurology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neurology 0.00%"],"textfont":{"color":"#31688E","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.2%}\u003cextra\u003eNeuroscience\u003c\u002fextra\u003e","line":{"color":"#35B779","width":2.8},"marker":{"color":"#35B779","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neuroscience","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neuroscience 0.00%"],"textfont":{"color":"#35B779","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.2%}\u003cextra\u003eStroke\u003c\u002fextra\u003e","line":{"color":"#FDE725","width":2.8},"marker":{"color":"#FDE725","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Stroke","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Stroke 0.00%"],"textfont":{"color":"#FDE725","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"margin":{"l":36,"r":118,"t":6,"b":34},"font":{"family":"Georgia, 'Iowan Old Style', 'Palatino Linotype', serif","size":12,"color":"#111827"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","height":292,"hovermode":"x unified","showlegend":false,"xaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","linecolor":"rgba(156, 163, 175, 0.55)","range":[2014.9,2026.65],"showspikes":false},"yaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":true,"gridcolor":"rgba(17, 24, 39, 0.065)","gridwidth":1,"zeroline":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","tickformat":".2%","range":[0.0,0.003]}},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div></section><section class="chart-card"><div class="chart-kicker">Trend view</div><h2>High-impact concentration</h2><p>Share meeting the benchmark high-impact definition.</p><div>                            <div id="db740765-7099-41f1-b177-d72a2ecde046" class="plotly-graph-div" style="height:292px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("db740765-7099-41f1-b177-d72a2ecde046")) {                    Plotly.newPlot(                        "db740765-7099-41f1-b177-d72a2ecde046",                        [{"hovertemplate":"%{x}: %{y:.0%}\u003cextra\u003eCardiology\u003c\u002fextra\u003e","line":{"color":"#440154","width":2.8},"marker":{"color":"#440154","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Cardiology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"uxK1K1G7wj+9P9cqG47IP4ZgHW3ep8g\u002fKDKQ3p9rxT8Peuv+5FzCP9mGgOJzpsY\u002fSvWVzM+iuD\u002f\u002fOhiz0uixPxPOHhPOHqM\u002fhBBCCCGEgD8AAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Cardiology 0%"],"textfont":{"color":"#440154","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.0%}\u003cextra\u003eNeurology\u003c\u002fextra\u003e","line":{"color":"#31688E","width":2.8},"marker":{"color":"#31688E","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neurology","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"XROBXBOBzD9MriAmVxDDPw+BG8ugVMg\u002fgvq8NFCfxz\u002fb0ZlUOzrDP5qZmZmZmcE\u002fO80KDl9IsT9fHlsRNJy0Px2Boq0Gz4E\u002fePshgbcfgj8AAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neurology 0%"],"textfont":{"color":"#31688E","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.0%}\u003cextra\u003eNeuroscience\u003c\u002fextra\u003e","line":{"color":"#35B779","width":2.8},"marker":{"color":"#35B779","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Neuroscience","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"SimllFJKyT+UWzy5xZPLP71f1vtlvc8\u002fovK00B27yj9UCQE5P5XAP\u002fp+arx0k7g\u002fpZRSSimlpD\u002fXWmuttdaqP4QQQgghhJA\u002fqvNrD7msiD8AAAAAAAAAAAAAAAAAAAAA"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Neuroscience 0%"],"textfont":{"color":"#35B779","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.0],"type":"scatter"},{"hovertemplate":"%{x}: %{y:.0%}\u003cextra\u003eStroke\u003c\u002fextra\u003e","line":{"color":"#FDE725","width":2.8},"marker":{"color":"#FDE725","line":{"color":"rgba(255,255,255,0.9)","width":1.2},"size":7},"mode":"lines+markers","name":"Stroke","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpB+oH"},"y":{"dtype":"f8","bdata":"K5gl5YDI0D9G2rECYaTNP\u002fXrhXVXoNA\u002fXkgQqgz20D\u002fGb5d6Mn7LPyivobyG8so\u002fmpzJmZzJyT8d1EEd1EG9P5y7oU3887g\u002fXvyJhFOapz8\u002f8z0cCWagPzmO4ziO46g\u002f"},"type":"scatter"},{"cliponaxis":false,"hoverinfo":"skip","mode":"text","showlegend":false,"text":["Stroke 5%"],"textfont":{"color":"#FDE725","family":"Arial, sans-serif","size":11},"textposition":"middle right","x":[2026.18],"y":[0.04861111111111111],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"margin":{"l":36,"r":118,"t":6,"b":34},"font":{"family":"Georgia, 'Iowan Old Style', 'Palatino Linotype', serif","size":12,"color":"#111827"},"paper_bgcolor":"rgba(0,0,0,0)","plot_bgcolor":"rgba(0,0,0,0)","height":292,"hovermode":"x unified","showlegend":false,"xaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","linecolor":"rgba(156, 163, 175, 0.55)","range":[2014.9,2026.65],"showspikes":false},"yaxis":{"tickfont":{"size":11,"color":"#4b5563"},"title":{},"showgrid":true,"gridcolor":"rgba(17, 24, 39, 0.065)","gridwidth":1,"zeroline":false,"ticks":"outside","ticklen":4,"tickcolor":"rgba(107, 114, 128, 0.75)","tickformat":".0%","range":[0.0,0.323321554770318]}},                        {"displayModeBar": false, "responsive": true}                    )                };            </script>        </div></section>
+    </section>
+
+    <section class="table-section">
+      <h2>Comparative ledger</h2>
+      <p>Weighted rates aggregate across the full observation window for each discipline.</p>
+      <div class="table-wrap"><table><thead><tr><th>Discipline</th><th>Papers</th><th>Years</th><th>Non-OA signal</th><th>OA</th><th>Materials</th><th>GitHub</th><th>Prereg.</th><th>High-impact</th><th>Mean cites</th></tr></thead><tbody><tr><td class="discipline-cell"><span class="table-swatch" style="background:#35B779"></span>Neuroscience</td><td>2,967</td><td>12</td><td>2%</td><td>72%</td><td>2%</td><td>1%</td><td>0%</td><td>10%</td><td>576</td></tr><tr><td class="discipline-cell"><span class="table-swatch" style="background:#FDE725"></span>Stroke</td><td>3,385</td><td>12</td><td>1%</td><td>68%</td><td>1%</td><td>0%</td><td>0%</td><td>17%</td><td>149</td></tr><tr><td class="discipline-cell"><span class="table-swatch" style="background:#31688E"></span>Neurology</td><td>2,817</td><td>12</td><td>0%</td><td>71%</td><td>0%</td><td>0%</td><td>0%</td><td>10%</td><td>189</td></tr><tr><td class="discipline-cell"><span class="table-swatch" style="background:#440154"></span>Cardiology</td><td>2,924</td><td>12</td><td>0%</td><td>72%</td><td>0%</td><td>0%</td><td>0%</td><td>10%</td><td>451</td></tr></tbody></table></div>
+      <p class="footnote">Color encoding uses a viridis-derived palette. Non-OA signal excludes plain open access and counts repository, preprint, or preregistration evidence only.</p>
+    </section>
+  </main>
+</body>
+</html>
