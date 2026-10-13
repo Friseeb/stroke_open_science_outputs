@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stroke Open-Science Benchmark</title>
+  <meta name="description" content="Open access, data and code sharing, registration and data-availability statements in stroke research since 2015, measured against neurology, neuroscience and cardiology.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" charset="utf-8"></script>
+</head>
+<body>
+  <a class="skip-link" href="#s1">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-in">
+      <a class="wordmark" href="#top"><span class="sq" aria-hidden="true"></span>Stroke Open-Science Benchmark</a>
+      <nav class="topnav" id="topnav" aria-label="Sections"></nav>
+      <div class="topbar-right">
+        <a class="edition" id="edition" href="#controls" title="Current selection; click to change it"></a>
+        <button type="button" id="theme-toggle" class="theme-toggle" title="Colour theme">Auto</button>
+        <button type="button" id="download-btn" class="block-btn"><span class="long">Download CSV</span><span class="short" aria-hidden="true">CSV</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap" aria-label="Title">
+      <p class="eyebrow" id="hero-eyebrow"></p>
+      <h1 class="display"><span>Stroke</span><span class="l2">Open-Science</span><span class="l3">Benchmark</span></h1>
+      <p class="hero-foot">OpenAlex · Unpaywall · Crossref · Europe PMC · World Bank</p>
+      <div class="hero-aside">
+        <p class="standfirst">Open access, data and code sharing, registration and data-availability statements in stroke research, measured against neurology, neuroscience and cardiology.</p>
+        <a class="ulink" href="#s1">Indicators</a>
+      </div>
+    </section>
+
+    <section class="controls" id="controls" aria-label="Selection">
+      <div class="wrap">
+        <div class="ctl-row">
+          <div class="ctl-group"><span class="ctl-label">Years</span><div class="pills" id="year-pills" role="group" aria-label="Years"></div></div>
+          <div class="ctl-group"><span class="ctl-label">Papers</span><div class="pills" id="hi-pills" role="group" aria-label="Papers"></div></div>
+          <div class="ctl-group"><span class="ctl-label">Disciplines</span><div class="pills" id="disc-pills" role="group" aria-label="Disciplines"></div></div>
+          <div class="ctl-group"><label class="ctl-label" for="focus-select">Focus</label><select id="focus-select" class="inline-select"></select></div>
+          <div class="ctl-group ctl-grow"><label class="ctl-label" for="slice-select">Within</label><select id="slice-select" class="inline-select"></select></div>
+          <div class="ctl-actions">
+            <button type="button" id="reset-btn" class="ulink-btn">Reset</button>
+            <button type="button" id="share-btn" class="ulink-btn" title="Copy a link to this selection">Copy link</button>
+          </div>
+        </div>
+        <div class="ctl-row" id="year-custom" hidden>
+          <span class="ctl-label">Custom range</span>
+          <span class="readout" id="year-readout"></span>
+          <div class="year-range" role="group" aria-label="Year range">
+            <label class="sr-only" for="year-min">From year</label>
+            <input id="year-min" type="range" step="1">
+            <label class="sr-only" for="year-max">To year</label>
+            <input id="year-max" type="range" step="1">
+          </div>
+        </div>
+        <p id="filter-note" class="note" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- 01 Indicators: the report card -->
+    <section class="sec wrap" id="s1" aria-labelledby="s1-title">
+      <header class="sec-head">
+        <p class="eyebrow"><span class="num">01</span>Report card</p>
+        <h2 class="sec-title" id="s1-title">Indicators</h2>
+        <p class="sec-note" id="s1-note"></p>
+      </header>
+      <div class="card-scroll"><div id="report-card" class="report" role="table" aria-label="Indicator matrix"></div></div>
+      <p class="caption" id="s1-caption"></p>
+    </section>
+
+    <!-- 02 Trends -->
+    <section class="sec wrap" id="s2" aria-labelledby="s2-title">
+      <header class="sec-head">
+        <p class="eyebrow"><span class="num">02</span>By year</p>
+        <h2 class="sec-title" id="s2-title">Trends</h2>
+        <p class="sec-note">One indicator at a time across the selected disciplines. Pick the indicator here or in the report card.</p>
+      </header>
+      <figure class="fig">
+        <div class="fig-head">
+          <h3 class="fig-title" id="trend-title"></h3>
+          <div class="fig-opts">
+            <div class="opt"><span class="ctl-label">Indicator</span><div class="pills small" id="trend-metric" role="group" aria-label="Indicator"></div></div>
+          </div>
+        </div>
+        <div class="fig-opts" style="justify-content:flex-start; margin-bottom:12px">
+          <div class="opt"><span class="ctl-label">Show</span><div class="pills small" id="trend-show" role="group"></div></div>
+          <div class="opt"><span class="ctl-label">Layout</span><div class="pills small" id="trend-layout" role="group"></div></div>
+          <div class="opt"><span class="ctl-label">Policy milestones</span><div class="pills small" id="trend-markers" role="group"></div></div>
+        </div>
+        <div class="key" id="trend-key"></div>
+        <div id="trend-chart" class="chart" role="img" aria-label="Trend lines by discipline"></div>
+        <figcaption class="caption" id="trend-sub"></figcaption>
+        <details class="table-view"><summary>table</summary><div id="trend-table" class="table-scroll"></div></details>
+      </figure>
+      <div class="grid-2">
+        <figure class="fig">
+          <div class="fig-head">
+            <h3 class="fig-title" id="oa-title">Open-access route by year</h3>
+            <div class="fig-opts"><div class="opt"><div class="pills small" id="oa-grouping" role="group" aria-label="Grouping"></div></div><div class="opt"><div class="pills small" id="oa-mode" role="group" aria-label="Form"></div></div></div>
+          </div>
+          <div class="key" id="oa-key"></div>
+          <div id="oa-chart" class="chart" role="img" aria-label="Open-access route by year"></div>
+          <figcaption class="caption" id="oa-sub"></figcaption>
+          <details class="table-view"><summary>table</summary><div id="oa-table" class="table-scroll"></div></details>
+        </figure>
+        <figure class="fig">
+          <div class="fig-head"><h3 class="fig-title" id="hi-title"></h3><div class="fig-opts"><div class="opt"><div class="pills small" id="hi-mode" role="group" aria-label="Form"></div></div></div></div>
+          <div class="key" id="hi-key"></div>
+          <div id="hi-chart" class="chart" role="img" aria-label="All papers against the high-impact subset"></div>
+          <figcaption class="caption" id="hi-sub"></figcaption>
+          <details class="table-view"><summary>table</summary><div id="hi-table" class="table-scroll"></div></details>
+        </figure>
+      </div>
+      <figure class="fig">
+        <div class="fig-head">
+          <h3 class="fig-title" id="bb-title"></h3>
+          <div class="fig-opts"><div class="opt"><span class="ctl-label">Bubbles</span><div class="pills small" id="bb-entity" role="group" aria-label="Entity"></div></div></div>
+        </div>
+        <div class="fig-opts" style="justify-content:flex-start; margin-bottom:12px">
+          <div class="opt"><span class="ctl-label">Across</span><div class="pills small" id="bb-x" role="group" aria-label="Horizontal axis"></div></div>
+          <div class="opt"><span class="ctl-label">Up</span><div class="pills small" id="bb-y" role="group" aria-label="Vertical axis"></div></div>
+          <div class="opt"><span class="ctl-label">Trails</span><div class="pills small" id="bb-trails" role="group"></div></div>
+        </div>
+        <div class="key" id="bb-key"></div>
+        <div id="bb-chart" class="chart" role="img" aria-label="Bubbles by year"></div>
+        <div class="scrub">
+          <button type="button" id="bb-play" class="ulink-btn">Play</button>
+          <label class="sr-only" for="bb-year">Year</label>
+          <input id="bb-year" type="range" step="1" class="scrub-range">
+          <span class="readout" id="bb-readout"></span>
+        </div>
+        <figcaption class="caption" id="bb-sub"></figcaption>
+        <details class="table-view"><summary>table</summary><div id="bb-table" class="table-scroll"></div></details>
+      </figure>
+    </section>
+
+    <!-- 03 Data statements -->
+    <section class="sec wrap" id="s3" aria-labelledby="s3-title">
+      <header class="sec-head">
+        <p class="eyebrow"><span class="num">03</span>Full text</p>
+        <h2 class="sec-title" id="s3-title">Data statements</h2>
+        <p class="sec-note">Data-availability statements read from audited open-access full texts of the focus discipline, classified by what they promise.</p>
+      </header>
+      <figure class="fig">
+        <div class="fig-head">
+          <h3 class="fig-title" id="das-title">Statements by year</h3>
+          <div class="fig-opts">
+            <div class="opt"><span class="ctl-label">Classes</span><div class="pills small" id="das-grouping" role="group"></div></div>
+            <div class="opt"><span class="ctl-label">Denominator</span><div class="pills small" id="das-denominator" role="group"></div></div>
+            <div class="opt"><span class="ctl-label">Form</span><div class="pills small" id="das-mode" role="group"></div></div>
+          </div>
+        </div>
+        <div class="key" id="das-key"></div>
+        <div id="das-chart" class="chart" role="img" aria-label="Data-availability statement classes by year"></div>
+        <figcaption class="caption" id="das-sub"></figcaption>
+        <details class="table-view"><summary>table</summary><div id="das-table" class="table-scroll"></div></details>
+      </figure>
+      <div class="grid-2">
+        <figure class="fig">
+          <div class="fig-head"><h3 class="fig-title" id="das-disc-title">Full-text indicators by discipline</h3><div class="fig-opts"><div class="opt"><div class="pills small" id="ftd-mode" role="group" aria-label="Form"></div></div></div></div>
+          <div class="key" id="das-disc-key"></div>
+          <div id="das-disc-chart" class="chart" role="img" aria-label="Full-text indicators per discipline"></div>
+          <figcaption class="caption" id="das-disc-sub"></figcaption>
+          <details class="table-view"><summary>table</summary><div id="das-disc-table" class="table-scroll"></div></details>
+        </figure>
+        <figure class="fig">
+          <div class="fig-head"><h3 class="fig-title" id="ft-title">Full text against abstract</h3></div>
+          <div id="ft-table" class="table-scroll"></div>
+          <figcaption class="caption" id="ft-sub"></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 04 Income groups -->
+    <section class="sec wrap" id="s4" aria-labelledby="s4-title">
+      <header class="sec-head">
+        <p class="eyebrow"><span class="num">04</span>First author's country</p>
+        <h2 class="sec-title" id="s4-title">Income groups</h2>
+        <p class="sec-note">World Bank income group of the first author's country for the focus discipline: who publishes, by which open-access route, and what the full text shows.</p>
+      </header>
+      <div class="stat-grid" id="income-grid" aria-label="Share of papers by income group"></div>
+      <div class="grid-2">
+        <figure class="fig">
+          <div class="fig-head">
+            <h3 class="fig-title" id="eq-title"></h3>
+            <div class="fig-opts"><div class="opt"><span class="ctl-label">Indicator</span><div class="pills small" id="eq-signal" role="group"></div></div><div class="opt"><div class="pills small" id="eq-mode" role="group" aria-label="Form"></div></div></div>
+          </div>
+          <div class="key" id="eq-key"></div>
+          <div id="eq-chart" class="chart" role="img" aria-label="Indicator by first-author income group"></div>
+          <figcaption class="caption" id="eq-sub"></figcaption>
+          <details class="table-view"><summary>table</summary><div id="eq-table" class="table-scroll"></div></details>
+        </figure>
+        <figure class="fig">
+          <div class="fig-head"><h3 class="fig-title" id="eq-ft-title">Full-text indicators by income group</h3></div>
+          <div class="key" id="eq-ft-key"></div>
+          <div id="eq-ft-chart" class="chart" role="img" aria-label="Full-text indicators by income group"></div>
+          <figcaption class="caption" id="eq-ft-sub"></figcaption>
+          <details class="table-view"><summary>table</summary><div id="eq-ft-table" class="table-scroll"></div></details>
+        </figure>
+      </div>
+      <figure class="fig">
+        <div class="fig-head">
+          <h3 class="fig-title" id="t4-title"></h3>
+          <div class="fig-opts"><div class="opt"><span class="ctl-label">Indicator</span><div class="pills small" id="t4-metric" role="group"></div></div><div class="opt"><div class="pills small" id="t4-layout" role="group" aria-label="Form"></div></div></div>
+        </div>
+        <div class="key" id="t4-key"></div>
+        <div id="t4-chart" class="chart" role="img" aria-label="Trend by income group"></div>
+        <figcaption class="caption" id="t4-sub"></figcaption>
+        <details class="table-view"><summary>table</summary><div id="t4-table" class="table-scroll"></div></details>
+      </figure>
+    </section>
+
+    <!-- 05 Rankings -->
+    <section class="sec wrap" id="s5" aria-labelledby="s5-title">
+      <header class="sec-head">
+        <p class="eyebrow"><span class="num">05</span>Institutions, journals, funders, countries</p>
+        <h2 class="sec-title" id="s5-title">Rankings</h2>
+        <p class="sec-note">Ranked on indicators verified in the full text, relative to the discipline average. The audited count is shown for every entry; small counts are unstable.</p>
+      </header>
+      <figure class="fig">
+        <div class="fig-head">
+          <h3 class="fig-title" id="cm-title"></h3>
+          <div class="fig-opts">
+            <div class="opt"><div class="pills small" id="cm-entity" role="group" aria-label="Entity"></div></div>
+          </div>
+        </div>
+        <div class="fig-opts" style="justify-content:flex-start; margin-bottom:12px">
+          <div class="opt"><span class="ctl-label">Min. audited</span><div class="pills small" id="cm-min" role="group"></div></div>
+          <div class="opt"><span class="ctl-label">Show top</span><div class="pills small" id="cm-top" role="group"></div></div>
+          <div class="opt"><span class="ctl-label">Indicators in the index</span><div class="pills small" id="cm-signals" role="group"></div></div>
+          <div class="opt"><span class="ctl-label">Form</span><div class="pills small" id="cm-mode" role="group"></div></div>
+        </div>
+        <div id="cm-chart" class="chart" role="img" aria-label="Commitment index by entity"></div>
+        <figcaption class="caption" id="cm-sub"></figcaption>
+        <details class="table-view" open><summary>table</summary><div id="cm-table" class="table-scroll"></div></details>
+      </figure>
+      <figure class="fig">
+        <div class="fig-head">
+          <h3 class="fig-title" id="journal-title"></h3>
+          <div class="fig-opts"><div class="opt"><span class="ctl-label">Indicator</span><div class="pills small" id="journal-metric" role="group"></div></div></div>
+        </div>
+        <div class="fig-opts" style="justify-content:flex-start; margin-bottom:12px">
+          <div class="opt"><span class="ctl-label">Min. papers</span><div class="pills small" id="journal-min" role="group"></div></div>
+          <div class="opt"><span class="ctl-label">Show top</span><div class="pills small" id="journal-top" role="group"></div></div>
+          <div class="opt"><span class="ctl-label">Form</span><div class="pills small" id="journal-mode" role="group"></div></div>
+        </div>
+        <div id="journal-chart" class="chart" role="img" aria-label="Journals ranked on the chosen indicator"></div>
+        <figcaption class="caption" id="journal-sub"></figcaption>
+        <details class="table-view"><summary>table</summary><div id="journal-table" class="table-scroll"></div></details>
+      </figure>
+      <div class="grid-2">
+        <figure class="fig" id="country-fig">
+          <div class="fig-head"><h3 class="fig-title" id="country-title">Countries</h3></div>
+          <div id="country-table" class="table-scroll"></div>
+          <figcaption class="caption" id="country-sub"></figcaption>
+        </figure>
+        <figure class="fig" id="funder-fig">
+          <div class="fig-head"><h3 class="fig-title" id="funder-title">Funders</h3></div>
+          <div id="funder-table" class="table-scroll"></div>
+          <figcaption class="caption" id="funder-sub"></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 06 Methods -->
+    <section class="sec wrap" id="s6" aria-labelledby="s6-title">
+      <header class="sec-head">
+        <p class="eyebrow"><span class="num">06</span>Definitions, corpus, limits</p>
+        <h2 class="sec-title" id="s6-title">Methods</h2>
+        <p class="sec-note">Every rate on this page is computed in the browser from pre-aggregated counts for the current selection. No row-level data is shipped.</p>
+      </header>
+      <div class="methods" id="methods-body"></div>
+    </section>
+
+    <div class="wrap"><p id="error" class="error" hidden></p></div>
+  </main>
+
+  <footer class="page-footer">
+    <div class="wrap" id="footer-body"></div>
+  </footer>
+
+  <script src="charts.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
